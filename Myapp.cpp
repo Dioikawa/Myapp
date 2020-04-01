@@ -227,7 +227,7 @@ void Calculator(int son1,int mom1,int son2,int mom2,int opt,char string[])//计算
  char temps[20]="\0";
  char son[20]="\0";
  char mom[20]="\0";
- int s,m;
+ int s=0,m;
  switch(opt)
  {
   case '+':
@@ -317,7 +317,7 @@ int Answer(char str[],int y)//答案函数，str为运算式子,y为序号
 				if(temps[0]=='-')
 				 return -1;//判断中间结果是否为负
 
-            	getfenzifenmu(&s,&m,temps);
+				getfenzifenmu(&s,&m,temps);
 				 if(Push1(&num,m,s)==ERROR)
 					printf("Push3 ERROR!");//非负则中间结果入栈
 				continue;
@@ -367,248 +367,210 @@ void Truescore(int i,char string[])//获得一随机真分数
 
 int question(int y,int r)//生成题目
 {
-    FILE *fp;
+	FILE *fp;
 	fp=fopen("Exercises.txt","a");
 	//time_t t;
 	//srand(time(NULL));
-    int num,num1,num2,num3,num4,ans;
-    char opt1,opt2,opt3;
-    char str[25]={};//用于传进答案函数
-    char strf[25]={};//用于写进文件
-    char strt[5]={" ÷ "};
-    opt1=getopt();
-    opt2=getopt();
-    opt3=getopt();
-
-    num1=rand()%r;
-    num2=rand()%r;
-    num3=rand()%r;
-    num4=rand()%r;
-
-    if(r<3) num=rand()%4+1;//r小于3时，不产生分数
-    else num=rand()%6+1;
-
-    if(num==1)//a+b
-     {
-     	while(r==1&&opt1==-10)
-     	 opt1=getopt();//r是1则除号不参与运算
-
-     	while(opt1==-10&&num2==0)
-    	 num2=rand()%r;//0不可作为除数
-
-     	char str1[5]={};
-     	itoa(num1,str1,10);
-     	strcat(str,str1);
-     	strcat(strf,str1);
-
-     	char str2[5]={' ',opt1,' '};
-     	strcat(str,str2);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str2);
-
-     	char str3[5]={};
-     	itoa(num2,str3,10);
-     	strcat(str,str3);
-     	strcat(strf,str3);
-	 }
-	 if(num==2)//a+b+c
-     {  while(r==1&&(opt1==-10||opt2==-10))
-         {
-          opt1=getopt();
-          opt2=getopt();
-		 }//r是1则除号不参与运算
-
-     	while(opt1==-10&&num2==0)
-    	 num2=rand()%r;//0不可作为除数
+	int num,num1,num2,num3,num4,ans;
+	char opt1,opt2,opt3;
+	char str[25]={'\0'};//用于传进答案函数
+	char strf[25]={'\0'};//用于写进文件
+	char strt[5]={" ÷ "};
+	opt1=getopt();
+	opt2=getopt();
+	opt3=getopt();
+	num1=rand()%r;
+	num2=rand()%r;
+	num3=rand()%r;
+	num4=rand()%r;
+	if(r<3) num=rand()%4+1;//r小于3时，不产生分数
+	else num=rand()%6+1;
+	if(num==1)//a+b
+	{
+		while(r==1&&opt1==-10)
+			opt1=getopt();//r是1则除号不参与运算
+		while(opt1==-10&&num2==0)
+			num2=rand()%r;//0不可作为除数
+		char str1[5]={'\0'};
+		itoa(num1,str1,10);
+		strcat(str,str1);
+		strcat(strf,str1);
+		char str2[5]={' ',opt1,' '};
+		strcat(str,str2);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str2);
+		char str3[5]={'\0'};
+		itoa(num2,str3,10);
+		strcat(str,str3);
+		strcat(strf,str3);
+	}
+	if(num==2)//a+b+c
+	{
+		while(r==1&&(opt1==-10||opt2==-10))
+		{
+			opt1=getopt();
+			opt2=getopt();
+		}//r是1则除号不参与运算
+		while(opt1==-10&&num2==0)
+			num2=rand()%r;//0不可作为除数
 		while(opt2==-10&&num3==0)
-    	 num2=rand()%r;//0不可作为除数
-
-     	char str1[5]={};
-     	itoa(num1,str1,10);
-     	strcat(str,str1);
-     	strcat(strf,str1);
-
-     	char str2[5]={' ',opt1,' '};
-     	strcat(str,str2);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str2);
-
-     	char str3[5]={};
-     	itoa(num2,str3,10);
-     	strcat(str,str3);
-     	strcat(strf,str3);
-
-     	char str4[5]={' ',opt2,' '};
-     	strcat(str,str4);
-     	if(opt2==-10) strcat(strf,strt);
-     	else strcat(strf,str4);
-
-     	char str5[5]={};
-     	itoa(num3,str5,10);
-     	strcat(str,str5);
-     	strcat(strf,str5);
-	 }
-	  if(num==3)//a+b+c+d
-     {
-         while(r==1&&(opt1==-10||opt2==-10||opt3==-10))
-         {
-          opt1=getopt();
-          opt2=getopt();
-          opt3=getopt();
-		 }//r是1则除号不参与运算
-
-     	while(opt1==-10&&num2==0)
-    	 num2=rand()%r;//0不可作为除数
+			num2=rand()%r;//0不可作为除数
+		char str1[5]={};
+		itoa(num1,str1,10);
+		strcat(str,str1);
+		strcat(strf,str1);
+		char str2[5]={' ',opt1,' '};
+		strcat(str,str2);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str2);
+		char str3[5]={};
+		itoa(num2,str3,10);
+		strcat(str,str3);
+		strcat(strf,str3);
+		char str4[5]={' ',opt2,' '};
+		strcat(str,str4);
+		if(opt2==-10) strcat(strf,strt);
+		else strcat(strf,str4);
+		char str5[5]={};
+		itoa(num3,str5,10);
+		strcat(str,str5);
+		strcat(strf,str5);
+	}
+	if(num==3)//a+b+c+d
+	{
+		while(r==1&&(opt1==-10||opt2==-10||opt3==-10))
+		{
+			opt1=getopt();
+			opt2=getopt();
+			opt3=getopt();
+		}//r是1则除号不参与运算
+		while(opt1==-10&&num2==0)
+			num2=rand()%r;//0不可作为除数
 		while(opt2==-10&&num3==0)
-    	 num3=rand()%r;//0不可作为除数
+			num3=rand()%r;//0不可作为除数
 		while(opt3==-10&&num4==0)
-    	 num4=rand()%r;//0不可作为除数
+			num4=rand()%r;//0不可作为除数
+		char str1[5]={};
+		itoa(num1,str1,10);
+		strcat(str,str1);
+		strcat(strf,str1);
 
-     	char str1[5]={};
-     	itoa(num1,str1,10);
-     	strcat(str,str1);
-     	strcat(strf,str1);
-
-     	char str2[5]={' ',opt1,' '};
-     	strcat(str,str2);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str2);
-
-     	char str3[5]={};
-     	itoa(num2,str3,10);
-     	strcat(str,str3);
-     	strcat(strf,str3);
-
-     	char str4[5]={' ',opt2,' '};
-     	strcat(str,str4);
-     	if(opt2==-10) strcat(strf,strt);
-     	else strcat(strf,str4);
-
-     	char str5[5]={};
-     	itoa(num3,str5,10);
-     	strcat(str,str5);
-     	strcat(strf,str5);
-
-     	char str6[5]={' ',opt3,' '};
-     	strcat(str,str6);
-     	if(opt3==-10) strcat(strf,strt);
-     	else strcat(strf,str6);
-
-     	char str7[5]={};
-     	itoa(num4,str7,10);
-     	strcat(str,str7);
-     	strcat(strf,str7);
-	 }
-
-	  if(num==5)//a/b+c
-	  {
+		char str2[5]={' ',opt1,' '};
+		strcat(str,str2);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str2);
+		char str3[5]={};
+		itoa(num2,str3,10);
+		strcat(str,str3);
+		strcat(strf,str3);
+		char str4[5]={' ',opt2,' '};
+		strcat(str,str4);
+		if(opt2==-10) strcat(strf,strt);
+		else strcat(strf,str4);
+		char str5[5]={};
+		itoa(num3,str5,10);
+		strcat(str,str5);
+		strcat(strf,str5);
+		char str6[5]={' ',opt3,' '};
+		strcat(str,str6);
+		if(opt3==-10) strcat(strf,strt);
+		else strcat(strf,str6);
+		char str7[5]={};
+		itoa(num4,str7,10);
+		strcat(str,str7);
+		strcat(strf,str7);
+	}
+	if(num==5)//a/b+c
+	{
 	  	while(opt1==-10&&num1==0)
-    	 num1=rand()%r;//0不可作为除数
-
+			num1=rand()%r;//0不可作为除数
 	  	Truescore(r,str);
 	  	strcpy(strf,str);
-
 	  	char str1[5]={' ',opt1,' '};
-     	strcat(str,str1);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str1);
-
-     	char str2[5]={};
-     	itoa(num1,str2,10);
-     	strcat(str,str2);
-     	strcat(strf,str2);
-	  }
-
-	  if(num==6)//a+b/c+d
-	  {
+		strcat(str,str1);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str1);
+		char str2[5]={};
+		itoa(num1,str2,10);
+		strcat(str,str2);
+		strcat(strf,str2);
+	}
+	if(num==6)//a+b/c+d
+	{
 	  	while(opt2==-10&&num2==0)
-    	 num2=rand()%r;//0不可作为除数
-
-     	char str1[5]={};
-     	itoa(num1,str1,10);
-     	strcat(str,str1);
-     	strcat(strf,str1);
-
-     	char str2[5]={' ',opt1,' '};
-     	strcat(str,str2);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str2);
-
-     	char str3[8]={};
+		num2=rand()%r;//0不可作为除数
+		char str1[5]={};
+		itoa(num1,str1,10);
+		strcat(str,str1);
+		strcat(strf,str1);
+		char str2[5]={' ',opt1,' '};
+		strcat(str,str2);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str2);
+		char str3[8]={};
 	  	Truescore(r,str3);
-     	strcat(str,str3);
-     	strcat(strf,str3);
-
-     	char str4[5]={' ',opt2,' '};
-     	strcat(str,str4);
-     	if(opt2==-10) strcat(strf,strt);
-     	else strcat(strf,str4);
-
-     	char str5[5]={};
-     	itoa(num2,str5,10);
-     	strcat(str,str5);
-     	strcat(strf,str5);
-	  }
-
-	  if(num==4)//a+(b+c)
-	  {
-	   while(r==1&&(opt1==-10||opt2==-10))
-         {
-          opt1=getopt();
-          opt2=getopt();
-		 }//r是1则除号不参与运算
-
-     	while(opt1==-10&&num2==0)
-    	 num2=rand()%r;//0不可作为除数
+		strcat(str,str3);
+		strcat(strf,str3);
+		char str4[5]={' ',opt2,' '};
+		strcat(str,str4);
+		if(opt2==-10) strcat(strf,strt);
+		else strcat(strf,str4);
+		char str5[5]={};
+		itoa(num2,str5,10);
+		strcat(str,str5);
+		strcat(strf,str5);
+	}
+	if(num==4)//a+(b+c)
+	{
+		while(r==1&&(opt1==-10||opt2==-10))
+		{
+			opt1=getopt();
+			opt2=getopt();
+		}//r是1则除号不参与运算
+		while(opt1==-10&&num2==0)
+			num2=rand()%r;//0不可作为除数
 		while(opt2==-10&&num3==0)
-    	 num3=rand()%r;//0不可作为除数
-
-     	char str1[5]={};
-     	itoa(num1,str1,10);
-     	strcat(str,str1);
-     	strcat(strf,str1);
-
-     	char str2[5]={' ',opt1,' '};
-     	strcat(str,str2);
-     	if(opt1==-10) strcat(strf,strt);
-     	else strcat(strf,str2);
-
-     	char left[3]={'('};
-     	strcat(str,left);
-     	strcat(strf,left);
-
-     	char str3[5]={};
-     	itoa(num2,str3,10);
-     	strcat(str,str3);
-     	strcat(strf,str3);
-
-     	char str4[5]={' ',opt2,' '};
-     	strcat(str,str4);
-     	if(opt2==-10) strcat(strf,strt);
-     	else strcat(strf,str4);
-
-     	char str5[5]={};
-     	itoa(num3,str5,10);
-     	strcat(str,str5);
-     	strcat(strf,str5);
-
-     	char right[3]={')'};
-     	strcat(str,right);
-     	strcat(strf,right);
-	 }
-
+			num3=rand()%r;//0不可作为除数
+		char str1[5]={};
+		itoa(num1,str1,10);
+		strcat(str,str1);
+		strcat(strf,str1);
+		char str2[5]={' ',opt1,' '};
+		strcat(str,str2);
+		if(opt1==-10) strcat(strf,strt);
+		else strcat(strf,str2);
+		char left[3]={'('};
+		strcat(str,left);
+		strcat(strf,left);
+		char str3[5]={};
+		itoa(num2,str3,10);
+		strcat(str,str3);
+		strcat(strf,str3);
+		char str4[5]={' ',opt2,' '};
+		strcat(str,str4);
+		if(opt2==-10) strcat(strf,strt);
+		else strcat(strf,str4);
+		char str5[5]={};
+		itoa(num3,str5,10);
+		strcat(str,str5);
+		strcat(strf,str5);
+		char right[3]={')'};
+		strcat(str,right);
+		strcat(strf,right);
+	}
 	// ans=Answer(str,y);//将题目字符串str传进生成答案函数Answer
-	 if(Answer(str,y)<0)
-	 {  fclose(fp);
-	    return -1;
-	 }//若计算答案过程中产生负数，则返回-1给main()处理
-	 else//否则将题目写进Exercises.txt文件，并返回1给main()处理
-	 {
+	if(Answer(str,y)<0)
+	{
+		fclose(fp);
+		return -1;
+	}//若计算答案过程中产生负数，则返回-1给main()处理
+	else//否则将题目写进Exercises.txt文件，并返回1给main()处理
+	{
 	    //printf("%d.%s",y,str) ;
-	    fprintf(fp,"%d.%s = \n",y,strf);
-	    fclose(fp);
-	    return 1;
-     }
+		fprintf(fp,"%d.%s = \n",y,strf);
+		fclose(fp);
+		return 1;
+	}
 }
 
 void Answer1(char str[],char answer[])//答案函数，str为运算式子,answer为结果
