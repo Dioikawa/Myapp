@@ -699,7 +699,7 @@ int getquestion(FILE *f,int *n,char str[]) //取文件题目
 		else{
 			if(q[i]==-95)
 			{
-				str[j]=-62;
+				str[j]=-10;
 				j++;
 				i++;
 			}
@@ -795,26 +795,42 @@ void check(char exercisefile[],char answerfile[])
 }
 int main(int argc, char *argv[])
 {
- if(argc<2)
-    {
-        printf("you must input args!");
-        return 0;
-    }//用户无参数输入
- int y=1;
- int n,r,flag;
- time_t t;
- srand((unsigned) time(NULL));
- n=atoi(argv[2]);
- r=atoi(argv[4]);//将char转换为int
- if(!strcmp(argv[1],"-n")&&!strcmp(argv[3],"-r"))
-    {
-        while(n>0)
-        {
+	if(argc<2)
+	{
+		printf("you must input args!");
+		return 0;
+	}//用户无参数输入
+	int y=1;
+	int n,r;
+	time_t t;
+	srand((unsigned) time(NULL));
+	if(!strcmp(argv[1],"-n")&&!strcmp(argv[3],"-r"))
+	{
+		n=atoi(argv[2]);
+		r=atoi(argv[4]);//将char转换为int
+		while(n>0)
+		{
             //flag=question(y,r);//question()的返回值为生成题目的答案
-            if(question(y,r)<0) continue;
-            y++;
-            n--;
-        }
-    }
-  return 0;
+			if(question(y,r)<0) continue;
+			y++;
+			n--;
+		}
+	}
+	else if(!strcmp(argv[1],"-r")&&!strcmp(argv[3],"-n"))
+	{
+		n=atoi(argv[4]);
+		r=atoi(argv[2]);//将char转换为int
+		while(n>0)
+		{
+            //flag=question(y,r);//question()的返回值为生成题目的答案
+			if(question(y,r)<0) continue;
+			y++;
+			n--;
+		}
+	}
+	else if(!strcmp(argv[1],"-e")&&!strcmp(argv[3],"-a"))
+		check(argv[2],argv[4]);
+	else if(!strcmp(argv[1],"-a")&&!strcmp(argv[3],"-e"))
+		check(argv[4],argv[2]);
+	return 0;
 }
